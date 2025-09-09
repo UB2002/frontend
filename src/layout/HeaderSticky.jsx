@@ -4,33 +4,54 @@ import { btnMotion } from "../components/motionPresets.js";
 import ThemeToggle from "../components/ThemeToggle.jsx";
 
 export default function HeaderSticky() {
-  return (
-    <header className="sticky top-0 z-50 bg-white/60 backdrop-blur border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold shadow-lg">
-            L9
-          </div>
-          <div className="hidden sm:block font-semibold">Leo9 Studio</div>
-        </div>
+  const NavItem = ({ label, href, active }) => (
+    <motion.a
+      {...btnMotion}
+      href={href}
+      className="relative px-1 py-1 hover:opacity-80 transition"
+    >
+      <span className="align-middle">{label}</span>
+      {active && <span className="ml-2 inline-block w-2 h-2 rounded-full bg-black align-middle" />}
+    </motion.a>
+  );
 
-        <nav className="hidden md:flex items-center gap-8 text-sm">
-          <motion.a {...btnMotion} href="#hero" className="hover:underline">Home</motion.a>
-          <motion.a {...btnMotion} href="#services" className="hover:underline">Services</motion.a>
-          <motion.a {...btnMotion} href="#case-studies" className="hover:underline">Case Studies</motion.a>
+  return (
+    <header className="sticky top-0 z-50 bg-white/70 backdrop-blur border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-16 flex items-center">
+        {/* Left: Logo + wordmark */}
+        <a href="#hero" className="flex items-center gap-3 shrink-0">
+          <svg width="34" height="34" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="20" stroke="#111" strokeWidth="2"/>
+            <path d="M16 20l8-6 8 6v8l-8 6-8-6v-8z" stroke="#111" strokeWidth="2" fill="none"/>
+          </svg>
+          <span className="text-xl font-semibold tracking-tight">Leo9</span>
+        </a>
+
+        {/* Center: Nav */}
+        <nav className="hidden md:flex mx-auto items-center gap-8 text-base">
+          <NavItem label="Work" href="#hero" />
+          <NavItem label="Services" href="#services" active />
+          <NavItem label="Clients" href="#case-studies" />
+          <NavItem label="About" href="#about" active={false} />
+          <NavItem label="Knowledge" href="#knowledge" />
+        </nav>
+
+        {/* Right: Theme + CTA */}
+        <div className="ml-auto hidden md:flex items-center gap-5">
+          <ThemeToggle />
           <motion.a
             {...btnMotion}
             href="#contact"
-            className="px-4 py-2 rounded-md bg-gradient-to-r from-indigo-600 to-violet-500 text-white"
+            className="px-5 py-2 rounded-md bg-black text-white font-semibold shadow-sm"
           >
-            Get in touch
+            Contact
           </motion.a>
-          <ThemeToggle />
-        </nav>
+        </div>
 
-        <div className="md:hidden flex items-center gap-3">
+        {/* Mobile: simplified */}
+        <div className="md:hidden ml-auto flex items-center gap-3">
           <ThemeToggle />
-          <motion.a {...btnMotion} href="#hero" className="px-3 py-2">Menu</motion.a>
+          <motion.a {...btnMotion} href="#contact" className="px-4 py-2 rounded-md bg-black text-white font-semibold">Contact</motion.a>
         </div>
       </div>
     </header>
